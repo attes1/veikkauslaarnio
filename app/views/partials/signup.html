@@ -1,0 +1,69 @@
+<div class="row">
+  <div class="col-sm-12">
+    <h1>Rekisteröityminen</h1>
+  </div>
+
+  <div class="col-sm-12" ng-show="signup_closed">
+    Rekisteröityminen suljettu.
+  </div>
+
+  <div class="col-sm-12" ng-show="!signup_closed">
+    <form class="form" name="form" ng-submit="register(form)" novalidate>
+
+      <div class="form-group" ng-class="{ 'has-success': form.name.$valid && submitted,
+                                          'has-error': form.name.$invalid && submitted }">
+        <label>Nimi</label>
+
+        <input type="text" name="name" class="form-control" ng-model="user.name"
+               required/>
+        <p class="help-block" ng-show="form.name.$error.required && submitted">
+          Syötä koko nimesi.
+        </p>
+      </div>   
+
+      <div class="form-group" ng-class="{ 'has-success': form.email.$valid && submitted,
+                                          'has-error': form.email.$invalid && submitted }">
+        <label>Email</label>
+
+        <input type="email" name="email" class="form-control" ng-model="user.email"
+               required
+               mongoose-error/>
+        <p class="help-block" ng-show="form.email.$error.email && submitted">
+          Laita validi sähköposti.
+        </p>
+        <p class="help-block" ng-show="form.email.$error.required && submitted">
+          Syö sähköpostiosoitteesi.
+        </p>
+        <p class="help-block" ng-show="form.email.$error.mongoose">
+          {{ errors.email }}
+        </p>
+      </div>
+
+      <div class="form-group" ng-class="{ 'has-success': form.password.$valid && submitted,
+                                          'has-error': form.password.$invalid && submitted }">
+        <label>Salasana</label>
+        
+        <input type="password" name="password" class="form-control" ng-model="user.password"
+               ng-minlength="8"
+               required
+               mongoose-error/>
+        <p class="help-block"
+           ng-show="(form.password.$error.minlength || form.password.$error.required) && submitted">
+          Kahdeksan merkkiä vähintään salasanaan.
+        </p>
+        <p class="help-block" ng-show="form.password.$error.mongoose">
+          {{ errors.password }}
+        </p>
+      </div>
+
+      <button class="btn btn-lg btn-primary" type="submit">Rekisteröityminen</button>
+    </form>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <hr>
+    On jo tunnarit? <a href="/login" class="text-center new-account">Kirjaudu sisään.</a>
+  </div>
+</div>

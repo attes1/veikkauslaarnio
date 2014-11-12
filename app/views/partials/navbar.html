@@ -1,0 +1,33 @@
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-controller="NavbarCtrl">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">VEIKKAUSLAARNIO</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+	    <li ng-repeat="item in menu" ng-class="{active: isActive(item.link)}">
+	        <a ng-href="{{item.link}}">{{item.title}}</a>
+	    </li>
+	  </ul>
+	  <ul class="nav navbar-nav pull-right right-navbar-nav" ng-show="currentUser">
+	  	<li class="divider-vertical"></li>
+	    <li ng-hide="currentUser" ng-class="{active: isActive('/login')}"><a href="/login">Kirjaudu sisään</a></li>
+	    <li class="dropdown">
+	    	<a href class="dropdown-toggle" data-toggle="dropdown" ng-show="currentUser">{{ currentUser.name }} <b class="caret"></b></a>
+	          <ul class="dropdown-menu">
+	            <li ng-show="currentUser"><a ng-href="/settings">Asetukset</a></li>
+	            <li class="divider"></li>
+	            <li ng-show="currentUser"><a href="" ng-click="logout()">Kirjaudu ulos</a></li>
+	          </ul>
+	    </li>
+	    
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>

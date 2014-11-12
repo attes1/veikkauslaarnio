@@ -1,0 +1,32 @@
+<div class="container login">
+  <div class="row">
+    <div class="col-sm-12">
+      <h1>Sisäänkirjautuminen</h1>
+    </div>
+    <div class="col-sm-12">
+      <form class="form" name="form" ng-submit="login(form)" novalidate>
+
+        <div class="form-group">
+          <label>Sähköposti</label>
+
+          <input type="text" name="email" class="form-control" ng-model="user.email" required>
+        </div>
+
+        <div class="form-group">
+          <label>Salasana</label>
+          
+          <input type="password" name="password" class="form-control" ng-model="user.password" required>
+        </div>
+
+        <div class="form-group has-error">
+          <p class="help-block" ng-show="form.email.$error.required && form.password.$error.required && submitted">
+             Syötä sähköpostisi ja salasanasi.
+          </p>              
+          <p class="help-block">{{ errors.other }}</p>
+        </div>
+
+        <button type="submit" class="btn btn-lg btn-primary"> Kirjaudu </button>
+      </form>
+    </div>
+  </div>
+</div>

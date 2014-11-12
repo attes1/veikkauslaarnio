@@ -1,0 +1,82 @@
+<div ng-include="'partials/navbar'"></div>
+
+<div class="container">
+	<div loading-indicator></div>
+
+	<div ng-repeat="round in rounds">
+		<h2>{{ round.title }}</h2>
+
+		<div ng-repeat="match in round.games">
+			<div class="match" ng-class="{correct: isPredictionCorrect(match) && isMatchScore(match), incorrect: !isPredictionCorrect(match) && isMatchScore(match)}" ng-show="{{ isOwnProfile || hasMatchStarted(match.play_at, match.key) }}">
+				<div class="row">
+					<div class="col-md-6">
+						{{ match_dates[match.key] | date:'dd.MM.yyyy HH:mm' }}
+					</div>
+
+					<div class="col-md-6">
+						<div class="pull-right" ng-show="{{ isMatchScore(match) }}">
+							Pisteet: <span>{{ points[match.key] || 0 }}</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-4 text-center">
+						<h3>{{ match.team1_title }}<h3/>
+					</div>
+
+					<div class="col-md-4 text-center">
+						<h3>-</h3>
+					</div>
+
+					<div class="col-md-4 text-center">
+						<h3>{{ match.team2_title }}<h3/>
+					</div>
+				</div>
+
+				<div class="row" ng-show="{{ isMatchScore(match) }}">
+					<div class="col-md-4 text-center">
+						<h3>{{ match.score1 }} <span ng-show="{{ isOvertime(match) }}">(+ {{ match.score1ot + match.score1p }}</span><h3/>
+					</div>
+
+					<div class="col-md-4 text-center">
+						<h3>-</h3>
+					</div>
+
+					<div class="col-md-4 text-center">
+						<h3>{{ match.score2 }} <span ng-show="{{ isOvertime(match) }}">(+ {{ match.score2ot + match.score2p }}</span><h3/>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-4">
+						<div class="radio prediction_radio text-center">
+							<label>
+								<input ng-model="score1_predictions[match.key]" ng-change="setModelChange(match.key, score1_predictions[match.key], score2_predictions[match.key], round.pos)" type="number" ng-disabled="hasMatchStarted(match.play_at, match.key)" class="score" ng-class="{correct: isScorePredictionCorrect(match) && isMatchScore(match), incorrect: !isScorePredictionCorrect(match) && isMatchScore(match)}">
+							</label>
+						</div>
+					</div>
+
+					<div class="col-md-4 text-center">
+						<h3>-</h3>
+					</div>
+
+					<div class="col-md-4">
+						<div class="radio prediction_radio text-center">
+							<label>
+								<input ng-model="score2_predictions[match.key]" ng-change="setModelChange(match.key, score1_predictions[match.key], score2_predictions[match.key], round.pos)" type="number" ng-disabled="hasMatchStarted(match.play_at, match.key)" class="score" ng-class="{correct: isScorePredictionCorrect(match) && isMatchScore(match), incorrect: !isScorePredictionCorrect(match) && isMatchScore(match)}">
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="footer" class="container">
+	<div ng-animate="'animate'" ng-show="isModelChanged()">
+		<button class="btn btn-primary" ng-click="saveChanges()">Tallenna muutokset</button>
+		<button class="btn btn-danger" ng-click="cancelChanges()">Peruuta muutokset</button>
+	</div>
+</div>
